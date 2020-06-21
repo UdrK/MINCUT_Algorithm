@@ -42,11 +42,8 @@ def full_contraction(G):
     return len(G.E)
 
 def contraction(G, v1, v2, next_node):
-    for edge in G.E:
-        if edge[0] == v1 and edge[1] == v2:
-            G.E.remove([v1, v2])
-        elif edge[0] == v2 and edge[1] == v1:
-            G.E.remove([v2, v1])
+
+    G.E[:] = [e for e in G.E if e != [v1, v2] and e != [v2,v1]]
 
     for i in range (0, len(G.E)):
         if G.E[i][0] == v1 or G.E[i][0] == v2:

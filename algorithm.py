@@ -4,14 +4,15 @@ import random
 import statistics
 import copy
 
-def karger(G, k, given_minimum):
+
+def karger(G, k, given_minimum, timeout):
     # this stuff is needed to time the algorithm
     beginning_total = time.time()
     contraction_times = []          # i'll be returning the mean execution time of full_contraction
     found_flag = False              # this is needed to get the discovery_time
     discovery_time = math.inf
 
-    min = math.inf
+    minimum = math.inf
     for i in range(0, k):
         # timing each contraction, calculating mean in the end
         beginning_contraction = time.time()
@@ -19,8 +20,16 @@ def karger(G, k, given_minimum):
         ending_contraction = time.time()
 
         contraction_times.append(abs(ending_contraction-beginning_contraction))
-        if t < min:
-            min = t
+
+        # exit if timeout reached
+        if time.time() - beginning_total >= timeout:
+            ending_total = time.time()
+            total_time = abs(ending_total - beginning_total)
+            print('actual k {}'.format(i))
+            return minimum, statistics.mean(contraction_times), total_time, discovery_time, minimum - given_minimum
+
+        if t < minimum:
+            minimum = t
         # needed to find discovery_time
         if t <= given_minimum and not found_flag:
             discovery_time = abs(time.time()-beginning_total)
@@ -28,7 +37,8 @@ def karger(G, k, given_minimum):
 
     ending_total = time.time()
     total_time = abs(ending_total-beginning_total)
-    return min, statistics.mean(contraction_times), total_time, discovery_time, min-given_minimum
+    return minimum, statistics.mean(contraction_times), total_time, discovery_time, minimum-given_minimum
+
 
 def full_contraction(G):
     nodes = len(G.V)
@@ -41,8 +51,8 @@ def full_contraction(G):
         next_node += 1
     return len(G.E)
 
-def contraction(G, v1, v2, next_node):
 
+def contraction(G, v1, v2, next_node):
     G.E[:] = [e for e in G.E if e != [v1, v2] and e != [v2,v1]]
 
     for i in range (0, len(G.E)):

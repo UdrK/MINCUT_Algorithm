@@ -5,7 +5,7 @@ import statistics
 import copy
 
 
-def karger(G, k, given_minimum, timeout):
+def karger(G, k, expected_minimum, timeout):
     # this stuff is needed to time the algorithm
     beginning_total = time.time()
     contraction_times = []          # i'll be returning the mean execution time of full_contraction
@@ -26,18 +26,18 @@ def karger(G, k, given_minimum, timeout):
             ending_total = time.time()
             total_time = abs(ending_total - beginning_total)
             print('actual k {}'.format(i))
-            return minimum, statistics.mean(contraction_times), total_time, discovery_time, minimum - given_minimum
+            return minimum, statistics.mean(contraction_times), total_time, discovery_time, minimum - expected_minimum
 
         if t < minimum:
             minimum = t
         # needed to find discovery_time
-        if t <= given_minimum and not found_flag:
+        if t <= expected_minimum and not found_flag:
             discovery_time = abs(time.time()-beginning_total)
             found_flag = True
 
     ending_total = time.time()
     total_time = abs(ending_total-beginning_total)
-    return minimum, statistics.mean(contraction_times), total_time, discovery_time, minimum-given_minimum
+    return minimum, statistics.mean(contraction_times), total_time, discovery_time, (minimum-expected_minimum)/expected_minimum
 
 
 def full_contraction(G):

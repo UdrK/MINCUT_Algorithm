@@ -5,7 +5,7 @@ import algorithm
 import os
 import math
 
-directory_name = 'mincut_dataset'
+directory_name = '../mincut_dataset'
 i = 0
 
 files = os.listdir(directory_name)

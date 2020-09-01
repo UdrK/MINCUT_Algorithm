@@ -22,6 +22,6 @@ Compared to implementations in other languages python's execution time is orders
 
 The second biggest result: **The discovery time is much smaller then the execution time**.
 
-Karger's algorithm is a probabilistic algorithm: it works by repeating a procedure that is unlikely to find the optimal solution, but by repeating it this probability stacks and you end up with the optimal solution. The number of repetition is defined based on the probability of success of the procedure, however karger's algorithm finds the optimal solution a lot sooner.
+Karger's algorithm is a probabilistic algorithm: it works by repeating a procedure that is unlikely to find the optimal solution, but by repeating it this probability stacks and you end up with the optimal solution. The number of repetitions is defined based on the probability of success of the procedure, however karger's algorithm finds the optimal solution a lot sooner.
 
 Complete results in report.pdf.
